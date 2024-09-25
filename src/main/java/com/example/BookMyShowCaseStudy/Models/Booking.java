@@ -1,8 +1,14 @@
 package com.example.BookMyShowCaseStudy.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.List;
 
+
+@Getter
+@Setter
 public class Booking extends BaseModel {
     private BookingStatus bookingStatus;
 
