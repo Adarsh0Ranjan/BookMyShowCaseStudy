@@ -1,6 +1,7 @@
 package com.example.BookMyShowCaseStudy.Models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,7 @@ public class User extends BaseModel {
     private String name;
     private String email;
 
-    @ManyToOne
+    @OneToMany
     private List<Booking> bookings;
     private String password;
 }
