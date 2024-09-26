@@ -1,7 +1,5 @@
 package com.example.BookMyShowCaseStudy.Models;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +20,7 @@ public class Show extends BaseModel {
     @ManyToOne
     private Screen screen;
 
+    @Enumerated(EnumType.ORDINAL)
+    @ElementCollection
     private List<Feature> features;
 }
