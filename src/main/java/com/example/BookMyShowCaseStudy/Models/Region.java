@@ -1,6 +1,8 @@
 package com.example.BookMyShowCaseStudy.Models;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +14,6 @@ import java.util.List;
 @Entity
 public class Region extends BaseModel {
     private String name;
-    private List<Theatre> theatres;
+//    @OneToMany
+//    private List<Theatre> theatres;
 }
