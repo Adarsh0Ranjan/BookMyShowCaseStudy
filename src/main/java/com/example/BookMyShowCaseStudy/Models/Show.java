@@ -11,7 +11,6 @@ import java.util.List;
 @Setter
 @Entity(name = "shows")
 public class Show extends BaseModel {
-
     @ManyToOne
     private Movie movie;
     private Date startTime;
