@@ -1,5 +1,5 @@
 package com.example.BookMyShowCaseStudy.Services;
-import com.example.BookMyShowCaseStudy.Models.Booking;
+import com.example.BookMyShowCaseStudy.Models.*;
 import com.example.BookMyShowCaseStudy.Repositories.BookingRepository;
 import com.example.BookMyShowCaseStudy.Repositories.ShowRepository;
 import com.example.BookMyShowCaseStudy.Repositories.ShowSeatRepository;
@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Service
@@ -44,6 +47,37 @@ public class BookingService {
          * 9. Return to controller
          * ------end trx here today-------
          * */
+
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isEmpty()) {
+            throw new RuntimeException(); // TODO: Create Runtime Exception
+        }
+
+        User bookedBy = userOptional.get();
+
+        Optional<Show> showOptional = showRepository.findById(showId);
+        if(showOptional.isEmpty()) {
+            throw new RuntimeException(); // TODO: Create ShowNotFoundException
+        }
+        Show bookedShow = showOptional.get();
+
+        List<ShowSeat> showSeats = showSeatRepository.findAllById(showSeatIds);
+
+        for(ShowSeat showSeat: showSeats) {
+            if (!(showSeat.getShowSeatStatus().equals(ShowSeatStatus.AVAILABLE) ||
+                    (showSeat.getShowSeatStatus().equals(ShowSeatStatus.BLOCKED) &&
+                            Duration.between(showSeat.getBlockedAt().toInstant(), new Date().toInstant()).toMinutes() > 15
+                    ))) {
+                throw new RuntimeException();
+            }
+        }
+
+        List<ShowSeat> bookedShowSeats = new ArrayList<>();
+        for(ShowSeat showSeat: showSeats) {
+            showSeat.setShowSeatStatus(ShowSeatStatus.BLOCKED);
+            showSeat.setBlockedAt(new Date());
+            bookedShowSeats.add(showSeatRepository.save(showSeat));
+        }
 
         return null;
     }
