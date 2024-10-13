@@ -5,7 +5,9 @@ import Dtos.SignUpRequestDto;
 import Dtos.SignUpResponseDto;
 import com.example.BookMyShowCaseStudy.Models.User;
 import com.example.BookMyShowCaseStudy.Services.UserService;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class UserController {
     private UserService userService;
 

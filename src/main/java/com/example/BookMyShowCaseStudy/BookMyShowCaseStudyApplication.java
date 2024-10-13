@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-
 public class BookMyShowCaseStudyApplication implements CommandLineRunner {
 	@Autowired
 	private UserController userController;
@@ -24,7 +23,6 @@ public class BookMyShowCaseStudyApplication implements CommandLineRunner {
 		SignUpRequestDto requestDto = new SignUpRequestDto();
 		requestDto.setEmail("vishal1@gmail.com");
 		requestDto.setPassword("abc123");
-
 		userController.signUp(requestDto);
 	}
 }
