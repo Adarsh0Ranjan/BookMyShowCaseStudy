@@ -24,7 +24,7 @@ public class Booking extends BaseModel {
 
     @ManyToOne
     private Show show;
-    private int amount;
+    private int totalAmount;
 
     @OneToMany
     private List<Payment> payments;

@@ -21,13 +21,20 @@ public class BookingService {
     private ShowRepository showRepository;
     private ShowSeatRepository showSeatRepository;
     private UserRepository userRepository;
+    private PriceCalculatorService priceCalculatorService;
 
-    public BookingService(BookingRepository bookingRepository, ShowRepository showRepository,
-                          ShowSeatRepository showSeatRepository, UserRepository userRepository) {
+    public BookingService(
+            BookingRepository bookingRepository,
+            ShowRepository showRepository,
+            ShowSeatRepository showSeatRepository,
+            UserRepository userRepository,
+            PriceCalculatorService priceCalculatorService
+    ) {
         this.bookingRepository = bookingRepository;
         this.showRepository = showRepository;
         this.showSeatRepository = showSeatRepository;
         this.userRepository = userRepository;
+        this.priceCalculatorService = priceCalculatorService;
     }
 
 
@@ -78,7 +85,19 @@ public class BookingService {
             showSeat.setBlockedAt(new Date());
             bookedShowSeats.add(showSeatRepository.save(showSeat));
         }
+        Booking booking = new Booking();
+        booking.setBookingStatus(BookingStatus.PENDING);
+        booking.setShowSeats(bookedShowSeats);
+        booking.setUser(bookedBy);
+        booking.setBookedAt(new Date());
+        booking.setShow(bookedShow);
+        booking.setTotalAmount(priceCalculatorService
+                .calculatePrice(bookedShow, showSeats));
 
-        return null;
+        booking.setPayments(new ArrayList<>());
+
+        Booking savedBooking = bookingRepository.save(booking);
+
+        return savedBooking;
     }
 }

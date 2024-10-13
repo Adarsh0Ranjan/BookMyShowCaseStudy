@@ -4,9 +4,11 @@ import com.example.BookMyShowCaseStudy.Models.Show;
 import com.example.BookMyShowCaseStudy.Models.ShowSeat;
 import com.example.BookMyShowCaseStudy.Models.ShowSeatType;
 import com.example.BookMyShowCaseStudy.Repositories.ShowSeatTypeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PriceCalculatorService {
     private ShowSeatTypeRepository showSeatTypeRepository;
 
